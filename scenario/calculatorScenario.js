@@ -30,6 +30,14 @@ describe('calculator', function(){
     press('C');
     expect(binding('display()')).toEqual('0.');
   });
+  
+  it('should add two numbers', function(){
+    press(1);
+    press('+');
+    press(2);
+    press('=');
+    expect(binding('display()')).toEqual('3.');
+  });
 
 });
 

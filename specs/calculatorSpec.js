@@ -28,4 +28,26 @@ describe('CaluculatorController', function(){
     expect(calc.display()).toEqual('0.000123');
   });
 
+  
+  it('should add two numbers together and read on multiple equals', function(){
+    calc.number(1);
+    calc.key('+');
+    calc.number(2);
+    calc.key('=');
+    expect(calc.display()).toEqual('3.');
+    calc.key('=');
+    expect(calc.display()).toEqual('5.');
+  });
+  
+  it('should do nothing when equals is pressed', function(){
+    calc.key('=');
+    expect(calc.display()).toEqual('0.');
+  });
+  
+  it('should do nothing when plus before number', function(){
+    calc.key('+');
+    calc.number(2);
+    calc.key('=');
+    expect(calc.display()).toEqual('2.');
+  });
 });
