@@ -1,3 +1,10 @@
+var OPERATION = {
+  '*': function(a,b){ return a*b; },
+  '/': function(a,b){ return a/b; },
+  '+': function(a,b){ return a+b; },
+  '-': function(a,b){ return a-b; }
+};
+
 function CalculatorController(){
   this.clear();
 }
@@ -32,26 +39,36 @@ CalculatorController.prototype = {
       case '.':
         this.decimalPosition = this.decimalPosition || 1;
         break;
+      case '*':
       case '/':
+      case '+':
+      case '-':
         if (this.operation && !this.operationApplied) {
-          this.setValue(this.register / this.value);
+          this.setValue(
+              OPERATION[this.operation](this.register, this.value));
           this.updateDisplay();
           this.register = this.value;
           this.operationApplied = true;
         } else if (this.operation != key) {
           this.register = this.value;
-          this.operation = '/';
+          this.operation = key;
           this.setValue(0);
           this.operationApplied = false;
         }
         break;
       case '=':
         if(this.operation) {
-          this.register = this.updateDisplay(this.register / this.value);
+          this.register = this.updateDisplay(
+              OPERATION[this.operation](this.register, this.value));
           this.operationApplied = true;
         }
         break;
     }
+  },
+
+  negate: function(){
+    this.value = -this.value;
+    this.updateDisplay();
   },
 
   number: function(number){
